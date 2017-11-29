@@ -3,7 +3,6 @@
 set +x
 SHORT_OS_STR=$(uname -s)
 
-QT="5"
 if [ "${SHORT_OS_STR:0:5}" == "Linux" ]; then
     OPENMP="-DWITH_OPENMP=1"
     # Looks like there's a bug in Opencv 3.2.0 for building with FFMPEG
@@ -12,7 +11,6 @@ if [ "${SHORT_OS_STR:0:5}" == "Linux" ]; then
 fi
 if [ "${SHORT_OS_STR}" == "Darwin" ]; then
     OPENMP=""
-    QT="0"
 fi
 
 curl -L -O "https://github.com/opencv/opencv_contrib/archive/$PKG_VERSION.tar.gz"
@@ -49,8 +47,7 @@ PYTHON_UNSET_NUMPY="-DPYTHON${PY_UNSET_MAJOR}_NUMPY_INCLUDE_DIRS="
 PYTHON_UNSET_LIB="-DPYTHON${PY_UNSET_MAJOR}_LIBRARY="
 PYTHON_UNSET_SP="-DPYTHON${PY_UNSET_MAJOR}_PACKAGES_PATH="
 
-# FFMPEG building requires pkgconfig
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
+
 
 cmake -LAH                                                                \
     -DCMAKE_BUILD_TYPE="Release"                                          \
@@ -74,10 +71,8 @@ cmake -LAH                                                                \
     -DWITH_CUDA=0                                                         \
     -DWITH_OPENCL=0                                                       \
     -DWITH_OPENNI=0                                                       \
-    -DWITH_FFMPEG=1                                                       \
     -DWITH_MATLAB=0                                                       \
     -DWITH_VTK=0                                                          \
-    -DWITH_QT=$QT                                                         \
     -DWITH_GPHOTO2=0                                                      \
     -DINSTALL_C_EXAMPLES=0                                                \
     -DOPENCV_EXTRA_MODULES_PATH="../opencv_contrib-$PKG_VERSION/modules"  \
