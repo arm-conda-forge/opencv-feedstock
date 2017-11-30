@@ -42,6 +42,7 @@ requirements:
     - libpng >=1.6.22,<1.6.31
     - openblas
     - blas 1.1 {{ blas_variant }}  # [not win]
+    - jasper
 
   run:
     - python
@@ -56,6 +57,7 @@ requirements:
     - libpng >=1.6.22,<1.6.31
     - openblas >=0.2.18    # [not win]
     - blas 1.1 {{ blas_variant }}  # [not win]
+    - jasper
 
 
 test:
